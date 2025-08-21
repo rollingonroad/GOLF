@@ -2,6 +2,8 @@
 stuff for GOLF simulator
 
 # 安装有线、无线网卡驱动
+有线网卡地址：172.16.0.2
+
 
 # 安装tplink无线网卡驱动
 
@@ -11,8 +13,15 @@ stuff for GOLF simulator
 将密码改为空
 
 # 设置hotkey
-屏幕最大化
-Send !{Enter}
+autohotkey v2
+golf.ahk
+#Requires AutoHotkey v2.0
+
+SC16A:: Send("#{d}")
+SC15D:: Send("!{Enter}")
+
+将该文件放入startup目录里面
+
 
 # 设置udp服务
 关闭专有网络上的windows defender防火墙
