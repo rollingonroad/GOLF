@@ -1,0 +1,113 @@
+#! /home/david/wol/bin/python
+import subprocess
+import socket
+import serial
+import time
+import sys
+from wakeonlan import send_magic_packet
+from datetime import datetime
+import serial.tools.list_ports
+
+# ---------- 配置项 ----------
+TARGET_MAC = '48:21:0B:71:2C:32'
+TARGET_IP = '172.16.0.255'
+WINDOWS_IP = '172.16.0.2'
+UDP_PORT = 4000
+LOG_FILE = '/var/log/wake_on_ir.log'
+BAUDRATE = 9600
+TIMEOUT = 1
+CMD_ON  = b'\x7E\x30\x30\x30\x30\x20\x31\x0D'
+CMD_OFF = b'\x7E\x30\x30\x30\x30\x20\x30\x0D'
+
+# ---------- 日志 ----------
+def log(msg):
+    print(f"[{datetime.now()}] {msg}\n")
+    with open(LOG_FILE, 'a') as f:
+        f.write(f"[{datetime.now()}] {msg}\n")
+
+# ---------- 串口设备查找 ----------
+def find_serial_device(description_keyword, verbose=True):
+    ports = serial.tools.list_ports.comports()
+    candidates = []
+
+    for port in ports:
+        vid = f"{port.vid:04X}" if port.vid else '-'
+        pid = f"{port.pid:04X}" if port.pid else '-'
+        sn = port.serial_number or '-'
+        desc = port.description or '-'
+        man = port.manufacturer or '-'
+        prod = port.product or '-'
+
+        info_str = f"{port.device} | {desc} | {man} | {prod} | VID:{vid} PID:{pid} SN:{sn}"
+        candidates.append(info_str)
+
+        if description_keyword.lower() in info_str.lower():
+            if verbose:
+                log(f"[OK] 找到串口设备: {info_str}")
+            return port.device
+
+    if verbose:
+        log(f"[!] 未找到匹配串口设备: '{description_keyword}'")
+        log("候选串口设备如下：")
+        for line in candidates:
+            log(f" - {line}")
+
+    return None
+
+# ---------- 网络 & 控制 ----------
+def is_windows_running():
+    try:
+        result = subprocess.run(['ping', '-c', '5', '-i', '0.2', WINDOWS_IP], capture_output=True, text=True)
+        count = sum(1 for line in result.stdout.splitlines() if 'bytes from' in line or '来自' in line)
+        return count >= 3
+    except Exception as e:
+        log(f"ping 失败：{e}")
+        return False
+
+def send_shutdown_packet():
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.sendto(b'shutdowntangguo', (WINDOWS_IP, UDP_PORT))
+        log("已发送关机数据包到 Windows")
+    except Exception as e:
+        log(f"发送关机包失败：{e}")
+
+def send_wake_packet():
+    try:
+        send_magic_packet(TARGET_MAC, ip_address=TARGET_IP)
+        log("发送 Magic Packet 唤醒 Windows")
+    except Exception as e:
+        log(f"唤醒失败：{e}")
+
+def send_serial(cmd, port):
+    try:
+        with serial.Serial(port, BAUDRATE, timeout=TIMEOUT) as ser:
+            ser.write(cmd)
+            time.sleep(0.1)
+            resp = ser.read(16)
+            log(f"Sent: {cmd.hex()} Response: {resp.hex()}")
+    except Exception as e:
+        log(f"串口错误（{port}）：{e}")
+
+# ---------- 主函数 ----------
+def main():
+    if len(sys.argv) != 2 or sys.argv[1] not in ('on', 'off'):
+        print("用法: python3 script.py [on|off]")
+        return
+
+    action = sys.argv[1]
+    PROJECTOR_PORT = find_serial_device("067B") or "/dev/ttyUSB0"
+
+    if action == 'on':
+        send_wake_packet()
+        send_serial(CMD_ON, PROJECTOR_PORT)
+    elif action == 'off':
+        if is_windows_running():
+            send_shutdown_packet()
+            time.sleep(10)
+        send_serial(CMD_OFF, PROJECTOR_PORT)
+
+# ---------- 入口 ----------
+if __name__ == '__main__':
+    main()
+

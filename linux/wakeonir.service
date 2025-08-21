@@ -1,0 +1,15 @@
+[Unit]
+Description=IR Triggered Wake-on-LAN via WeChip
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=david
+WorkingDirectory=/home/david/wol
+ExecStart=/home/david/wol/bin/python /home/david/wol/wake_on_ir.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
