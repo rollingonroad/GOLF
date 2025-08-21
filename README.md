@@ -15,6 +15,8 @@ stuff for GOLF simulator
 Send !{Enter}
 
 # 设置udp服务
+关闭专有网络上的windows defender防火墙
+
 import socket
 import os
 
@@ -32,7 +34,15 @@ while True:
         print("Shutdown command received, shutting down...")
         os.system("shutdown /s /t 0")
 
+测试代码：
+>>> import socket
+>>> sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+>>> sock.sendto(b'shutdowntangguo', ("192.168.1.154", 4000))
+
 NSSM
+nssm.cc
+复制nssm.exe 到C:\windows\
+安装python要安装到C:\program Files\python下面，另外参数的目录要写对
 
 # 安装golf软件，并设置自动启动
 https://skytrakgolf.com/pages/downloads
