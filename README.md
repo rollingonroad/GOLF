@@ -67,3 +67,20 @@ Win+R shell:strtup
 # 设置鼠标大小和颜色
 
 设置-轻松使用-鼠标指针
+
+# Linux
+ 3  sudo apt install tcpdump
+    8  python3 -m venv ~/wol
+    9  source wol/bin/activate
+   10  pip install wakeonlan
+72  pip install evdev
+   73  python3 -m evdev.evtest
+   96  sudo vi /etc/systemd/system/wakeonir.service
+   97  sudo touch /var/log/wake_on_ir.log
+   98  sudo chown david:david /var/log/wake_on_ir.log
+   99  sudo systemctl daemon-reexec
+  100  sudo systemctl daemon-reload
+  101  sudo systemctl enable wakeonir.service
+  102  sudo systemctl start wakeonir.service
+  103  sudo systemctl status wakeonir.service
+
