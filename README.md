@@ -15,3 +15,10 @@ stuff for GOLF simulator
 # 设置udp服务
 
 # 安装golf软件，并设置自动启动
+https://skytrakgolf.com/pages/downloads
+登录信息：
+flyonsnow@hotmail.com
+S******166
+
+# 设置自动启动
+Win+R shell:strtup
