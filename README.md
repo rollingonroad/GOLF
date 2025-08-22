@@ -26,7 +26,7 @@ SC15D:: Send("!{Enter}")
 
 # 设置udp服务
 关闭专有网络上的windows defender防火墙
-
+```
 import socket
 import os
 
@@ -43,12 +43,13 @@ while True:
     if b"shutdown" in data:
         print("Shutdown command received, shutting down...")
         os.system("shutdown /s /t 0")
-
+```
 测试代码：
+```
 >>> import socket
 >>> sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 >>> sock.sendto(b'shutdowntangguo', ("192.168.1.154", 4000))
-
+```
 NSSM
 nssm.cc
 复制nssm.exe 到C:\windows\
