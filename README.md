@@ -52,24 +52,24 @@ while True:
 >>> sock.sendto(b'shutdowntangguo', ("192.168.1.154", 4000))
 ```
 * NSSM
-** nssm.cc
-** 复制nssm.exe 到C:\windows\
-** 安装python要安装到C:\program Files\python下面，另外参数的目录要写对
+  * nssm.cc
+  * 复制nssm.exe 到C:\windows\
+  * 安装python要安装到C:\program Files\python下面，另外参数的目录要写对
 <img width="645" height="347" alt="image" src="https://github.com/user-attachments/assets/11291da9-cb0c-46cb-9e96-44665a3480fa" />
 
 
 # 安装golf软件，并设置自动启动
-https://skytrakgolf.com/pages/downloads
-登录信息：
+* https://skytrakgolf.com/pages/downloads
+* 登录信息：
 flyonsnow@hotmail.com
 S******166
 
 # 设置自动启动
-Win+R shell:strtup
+* Win+R shell:strtup
 
 # 设置鼠标大小和颜色
 
-设置-轻松使用-鼠标指针
+* 设置-轻松使用-鼠标指针
 
 # Linux
  3  sudo apt install tcpdump
