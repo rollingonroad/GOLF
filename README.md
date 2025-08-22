@@ -13,8 +13,8 @@ stuff for GOLF simulator
 将密码改为空
 
 # 设置hotkey
-autohotkey v2
-golf.ahk
+autohotkey v2  
+golf.ahk  
 ```
 #Requires AutoHotkey v2.0
 
