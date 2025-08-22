@@ -26,6 +26,7 @@ SC15D:: Send("!{Enter}")
 
 # 设置udp服务
 关闭专有网络上的windows defender防火墙
+C:\shutdown_listener\listener.py
 ```
 import socket
 import os
