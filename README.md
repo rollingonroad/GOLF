@@ -72,6 +72,7 @@ S******166
 * 设置-轻松使用-鼠标指针
 
 # Linux
+```
  3  sudo apt install tcpdump
     8  python3 -m venv ~/wol
     9  source wol/bin/activate
@@ -86,4 +87,4 @@ S******166
   101  sudo systemctl enable wakeonir.service
   102  sudo systemctl start wakeonir.service
   103  sudo systemctl status wakeonir.service
-
+```
