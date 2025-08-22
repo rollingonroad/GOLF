@@ -2,7 +2,7 @@
 stuff for GOLF simulator
 # 记得关掉所有网卡上的防火墙
 # 安装有线、无线网卡驱动
-有线网卡地址：172.16.0.2/255.255.255.0
+* 有线网卡地址：172.16.0.2/255.255.255.0
 
 
 # 安装tplink无线网卡驱动
@@ -10,23 +10,23 @@ stuff for GOLF simulator
 # 禁用windows自动更新
 
 # 设置自动登录
-将密码改为空
+* 将密码改为空
 
 # 设置hotkey
-autohotkey v2  
-golf.ahk  
+* 安装autohotkey v2  
+* golf.ahk  
 ```
 #Requires AutoHotkey v2.0
 
 SC16A:: Send("#{d}")
 SC15D:: Send("!{Enter}")
 ```
-将该文件放入startup目录里面
+* 将golf.ahk放入startup目录里面
 
 
 # 设置udp服务
-关闭专有网络上的windows defender防火墙
-C:\shutdown_listener\listener.py
+* 关闭专有网络上的windows defender防火墙
+* C:\shutdown_listener\listener.py
 ```
 import socket
 import os
@@ -45,16 +45,16 @@ while True:
         print("Shutdown command received, shutting down...")
         os.system("shutdown /s /t 0")
 ```
-测试代码：
+* 测试代码：
 ```
 >>> import socket
 >>> sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 >>> sock.sendto(b'shutdowntangguo', ("192.168.1.154", 4000))
 ```
-NSSM
-nssm.cc
-复制nssm.exe 到C:\windows\
-安装python要安装到C:\program Files\python下面，另外参数的目录要写对
+* NSSM
+** nssm.cc
+** 复制nssm.exe 到C:\windows\
+** 安装python要安装到C:\program Files\python下面，另外参数的目录要写对
 <img width="645" height="347" alt="image" src="https://github.com/user-attachments/assets/11291da9-cb0c-46cb-9e96-44665a3480fa" />
 
 
