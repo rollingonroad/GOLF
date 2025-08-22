@@ -15,11 +15,12 @@ stuff for GOLF simulator
 # 设置hotkey
 autohotkey v2
 golf.ahk
+```
 #Requires AutoHotkey v2.0
 
 SC16A:: Send("#{d}")
 SC15D:: Send("!{Enter}")
-
+```
 将该文件放入startup目录里面
 
 
